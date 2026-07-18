@@ -1,0 +1,14 @@
+# Các file jupyter notebook checkpoint
+.ipynb_checkpoints/
+
+# File hệ thống và môi trường
+__pycache__/
+.DS_Store
+venv/
+env/
+.env
+
+# *.csv
+# *.sql
+# *.pkl
+# *.h5
