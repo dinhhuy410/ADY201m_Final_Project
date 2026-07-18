@@ -1,9 +1,3 @@
-# Các file dữ liệu và model
-*.csv
-*.sql
-*.pkl
-*.h5
-
 # Các file jupyter notebook checkpoint
 .ipynb_checkpoints/
 
@@ -13,3 +7,8 @@ __pycache__/
 venv/
 env/
 .env
+
+# *.csv
+# *.sql
+# *.pkl
+# *.h5
