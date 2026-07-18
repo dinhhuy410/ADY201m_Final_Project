@@ -37,7 +37,7 @@ python -m venv .venv
 ```
 ### 2. Cài đặt các thư viện cần thiết
 ```bash
-pip install pandas numpy scikit-learn tensorflow xgboost matplotlib
+   pip install -r requirements.txt
 ```
 ### 3. Chạy dự án
 * **Thu thập dữ liệu:** Chạy file `Getdata.ipynb`.
