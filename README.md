@@ -26,6 +26,12 @@ ADYFINAL/
 ```
 ##  Hướng dẫn Cài đặt & Chạy Dự án
 
+### 1. Tải dự án từ GitHub về
+```bash
+git clone https://github.com/dinhhuy410/ADY201m_Final_Project.git
+cd ADY201m_Final_Project
+```
+
 ### 1. Chuẩn bị môi trường
 ```bash
 # Tạo môi trường ảo
