@@ -49,4 +49,4 @@ python -m venv .venv
 * **Thu thập dữ liệu:** Chạy file `Getdata.ipynb`.
 * **Dự báo:** Chạy file `Predict.ipynb` hoặc chạy ứng dụng chính bằng lệnh:
 ```bash
-python Appv5.py
+streamlit run App.py
