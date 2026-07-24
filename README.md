@@ -82,15 +82,6 @@ ADYFinal/
     └── Training TCN.ipynb
 ```
 
-<<<<<<< HEAD
-### 1. Tải dự án từ GitHub về
-```bash
-git clone https://github.com/dinhhuy410/ADY201m_Final_Project.git
-cd ADY201m_Final_Project
-```
-
-### 1. Chuẩn bị môi trường
-=======
 ---
 
 ## 🚀 Cài đặt & Chạy
@@ -101,7 +92,6 @@ cd ADY201m_Final_Project
 - **Python 3.10+**
 
 ### Bước 1: Clone project
->>>>>>> 69ba0de (Cap nhat du an: xoa file cu, them database va cap nhat model)
 ```bash
 git clone https://github.com/dinhhuy410/ADY201m_Final_Project.git
 cd ADY201m_Final_Project
@@ -125,9 +115,6 @@ Get-Service -Name '*SQL*'
 
 ### Bước 5: Import dữ liệu vào SQL Server
 ```bash
-<<<<<<< HEAD
-streamlit run App.py
-=======
 python import_data.py
 ```
 Script sẽ tự động:
@@ -230,4 +217,3 @@ Hoặc chỉnh trực tiếp trong file `database.py`.
 ## 📝 License
 
 Dự án phục vụ mục đích học tập — môn ADY201m, Đại học [Tên trường].
->>>>>>> 69ba0de (Cap nhat du an: xoa file cu, them database va cap nhat model)
