@@ -1,4 +1,4 @@
-# 📊 ADY_QuantDB — Hướng dẫn thiết lập và chạy project
+# ADY_QuantDB — Hướng dẫn thiết lập và chạy project chi tiết
 
 ## Tổng quan
 
