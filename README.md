@@ -143,9 +143,9 @@ streamlit run App.py
 
 | Model | Framework | Mục đích |
 |-------|-----------|----------|
-| XGBoost | scikit-learn | Dự báo giá đóng cửa |
-| LSTM | TensorFlow/Keras | Dự báo chuỗi thời gian |
-| TCN | PyTorch | Temporal Convolutional Network |
+| XGBoost | xgboost (vcb_xgb_model.pkl, load qua joblib) | Dự báo % thay đổi giá dựa trên đặc trưng kỹ thuật tabular — mạnh về nắm bắt phi tuyến giữa nhiều biến |
+| LSTM | tensorflow.keras (vcb_lstm_model.h5) | Học mẫu hình chuỗi thời gian dài hạn (long-term dependencies) trong dữ liệu giá |
+| TCN | tensorflow.keras (vcb_tcn_model.h5) | Bắt mẫu hình cục bộ/ngắn hạn qua tích chập theo thời gian, huấn luyện nhanh & ổn định hơn LSTM |
 | Ensemble | Custom | Kết hợp 3 model (XGB 40%, LSTM 30%, TCN 30%) |
 
 ---
@@ -164,16 +164,42 @@ streamlit run App.py
 ---
 
 ## VIII. Quant Decision Engine
+## Bảng tổng hợp hệ thống chấm điểm
+| # | Yếu tố                               | Nguồn dữ liệu                      | Điều kiện chấm điểm                                                          | Điểm | Tối đa |
+| - | ------------------------------------ | ---------------------------------- | ---------------------------------------------------------------------------- | ---: | -----: |
+| 1 | **Xu hướng (Trend)**                 | EMA20, EMA50, SMA200               | EMA20 > EMA50                                                                |  +15 |     25 |
+|   |                                      |                                    | Close > SMA200                                                               |  +10 |        |
+| 2 | **Đồng thuận mô hình (Consensus)**   | Dự báo XGBoost, TCN, LSTM          | CV giữa 3 dự báo càng thấp → điểm càng cao: `20 − CV × 1000` (giới hạn 0–20) | 0–20 |     20 |
+| 3 | **Động lượng (Momentum)**            | RSI, MACD                          | 45 ≤ RSI ≤ 65                                                                |   +7 |     15 |
+|   |                                      |                                    | RSI > 65                                                                     |  +10 |        |
+|   |                                      |                                    | MACD > MACD Signal                                                           |   +5 |        |
+| 4 | **An toàn rủi ro (Risk)**            | GARCH volatility (dự báo ngày mai) | Vol < 25%                                                                    |  +20 |     20 |
+|   |                                      |                                    | 25% ≤ Vol < 40%                                                              |  +12 |        |
+|   |                                      |                                    | Vol ≥ 40%                                                                    |   +5 |        |
+| 5 | **Thanh khoản (Volume)**             | Vol_Ratio (KL hôm nay / MA20)      | `min(10, Vol_Ratio × 5)`                                                     | 0–10 |     10 |
+| 6 | **Sức mạnh giá (RSI vùng hồi phục)** | RSI                                | 30 < RSI < 40                                                                |  +10 |     10 |
+|   |                                      |                                    | Ngoài vùng trên                                                              |   +5 |        |
 
-Hệ thống ra quyết định dựa trên:
-1. **AI Consensus Score** — Đồng thuận 3 model
-2. **Technical Signals** — RSI, MACD, Bollinger Bands
-3. **Market Regime Detection** — Trending vs Sideways
-4. **Risk Parameters** — GARCH Volatility, Max Drawdown
-5. **Position Sizing** — Kelly Criterion + ATR-based Stop Loss
-
+### Tổng điểm (thang điểm 100)
+```text
+Tổng điểm = Trend + Consensus + Momentum + Risk + Volume + RSI
+```
 ---
-
+## Ánh xạ điểm → Khuyến nghị
+| Khoảng điểm | Khuyến nghị  | Màu          | Sao   |
+| ----------- | ------------ | ------------ | ----- |
+| ≥ 85        | **MUA MẠNH** | 🟢 `#00e676` | ★★★★★ |
+| 70 – 84     | **MUA**      | 🟢 `#a5d6a7` | ★★★★☆ |
+| 45 – 69     | **NẮM GIỮ**  | 🟡 `#ffd700` | ★★★☆☆ |
+| 25 – 44     | **BÁN**      | 🔴 `#ff8a80` | ★★☆☆☆ |
+| < 25        | **BÁN MẠNH** | 🔴 `#ff5252` | ★☆☆☆☆ |
+---
+## Lớp cảnh báo bổ sung
+Lớp cảnh báo này nằm **ngoài tổng điểm 100** và không làm thay đổi trực tiếp điểm Quant Decision Engine.
+| Điều kiện             | Nguồn                                  | Hành động                                                                                     |
+| --------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `ci_width_pct > 6.0%` | Mô hình GARCH(1,1), khoảng tin cậy 95% | Hiển thị cảnh báo rủi ro cao, khuyến nghị **không mở vị thế mới** trong chu kỳ T+2.5 hiện tại |
+---
 ## IX. Configuration
 
 Môi trường kết nối SQL Server có thể cấu hình qua environment variables:
