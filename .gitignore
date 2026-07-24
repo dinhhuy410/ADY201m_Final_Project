@@ -1,14 +1,72 @@
-# Các file jupyter notebook checkpoint
-.ipynb_checkpoints/
+# ============================================================
+# ADY_QuantDB — .gitignore
+# Dự án: AI Quant Investment Decision Support Platform (VCB)
+# ============================================================
 
-# File hệ thống và môi trường
+# === PYTHON ===
 __pycache__/
-.DS_Store
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# === VENV ===
 venv/
 env/
+ENV/
 .env
+.venv/
 
-# *.csv
-# *.sql
-# *.pkl
-# *.h5
+# === JUPYTER ===
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# === DATA FILES (lớn, nên generate lại từ SQL Server) ===
+*.db
+*.sqlite
+data/*.csv
+data/hybrid_predictions_output.csv
+
+# === MODEL FILES (lớn, nên train lại hoặc lưu riêng) ===
+models/*.pkl
+models/*.h5
+models/*.keras
+
+# === LOGS ===
+*.log
+logs/
+
+# === OS ===
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# === TEMP ===
+*.tmp
+*.temp
+*.bak
+*~
